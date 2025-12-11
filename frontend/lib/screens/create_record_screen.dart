@@ -214,8 +214,8 @@ class _CreateRecordScreenState extends State<CreateRecordScreen> {
                 ),
                 items: recordProvider.services.map((service) {
                   return DropdownMenuItem(
-                    value: service.id.toString(),
-                    child: Text(service.name),
+                    value: service['id'].toString(),
+child: Text(service['name']),
                   );
                 }).toList(),
                 onChanged: (value) {

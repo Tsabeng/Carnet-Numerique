@@ -56,16 +56,15 @@ class LoginScreen extends StatelessWidget {
               
               // Bouton Personnel
               _buildLoginOption(
-                context,
-                'PERSONNEL MÉDICAL',
-                'Accès professionnel',
-                Icons.medical_services,
-                Colors.green,
-                () {
-                  // Pour l'instant, on redirige vers patient aussi
-                  Navigator.pushNamed(context, '/patient-login');
-                },
-              ),
+  context,
+  'PERSONNEL MÉDICAL',
+  'Accès professionnel',
+  Icons.medical_services,
+  Colors.green,
+  () {
+    Navigator.pushNamed(context, '/doctor-login');
+  },
+),
               
               const Spacer(),
               
