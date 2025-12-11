@@ -6,6 +6,9 @@ import '../providers/patient_provider.dart';
 import 'create_record_screen.dart';
 import 'medical_records_screen.dart';
 
+import 'patient_code_access_screen.dart';
+import 'patient_management_screen.dart';
+
 class DoctorDashboardScreen extends StatelessWidget {
   const DoctorDashboardScreen({super.key});
 
@@ -195,6 +198,34 @@ class DoctorDashboardScreen extends StatelessWidget {
                     _showComingSoon(context, 'Analyses');
                   },
                 ),
+_buildMenuCard(
+  context,
+  'Gérer Patients',
+  Icons.people,
+  Colors.indigo,
+  () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PatientManagementScreen(),
+      ),
+    );
+  },
+),
+                _buildMenuCard(
+  context,
+  'Accès Patient',
+  Icons.person_search,
+  Colors.purple,
+  () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PatientCodeAccessScreen(),
+      ),
+    );
+  },
+),
               ],
             ),
           ),

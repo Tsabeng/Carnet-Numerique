@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import '../models/medical_record.dart';
 import '../providers/medical_record_provider.dart';
 import '../providers/patient_provider.dart';
+import '../providers/user_provider.dart';
 
 class CreateRecordScreen extends StatefulWidget {
   final String? patientId;
@@ -552,46 +553,50 @@ child: Text(service['name']),
     });
   }
   
-  void _submitForm() async {
-    if (_formKey.currentState!.validate()) {
-      // Combiner date et heure
-      final visitDateTime = DateTime(
-        _visitDate.year,
-        _visitDate.month,
-        _visitDate.day,
-        _visitTime.hour,
-        _visitTime.minute,
-      );
+void _submitForm() async {
+  if (_formKey.currentState!.validate()) {
+    // Combiner date et heure
+    final visitDateTime = DateTime(
+      _visitDate.year,
+      _visitDate.month,
+      _visitDate.day,
+      _visitTime.hour,
+      _visitTime.minute,
+    );
+    
+    try {
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
       
-      try {
-        final recordData = {
-          'patient_id': _selectedPatientId,
-          'service_id': int.parse(_selectedServiceId),
-          'visit_type': _visitType,
-          'visit_date': visitDateTime.toIso8601String(),
-          'symptoms': _symptomsController.text,
-          'diagnosis': _diagnosisController.text,
-          'treatment': _treatmentController.text,
-          'prescription': _prescriptionController.text,
-          'doctor_name': _doctorNameController.text,
-          'doctor_id': '1', // À remplacer par l'ID réel du médecin
-          'notes': _notesController.text,
-          'test_results': _testResults,
-        };
-        
-        await Provider.of<MedicalRecordProvider>(context, listen: false)
-            .createMedicalRecord(recordData);
-        
-        if (mounted) {
-          Navigator.pop(context);
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Dossier médical créé avec succès'),
-              backgroundColor: Colors.green,
-            ),
-          );
-        }
-      } catch (e) {
+      final recordData = {
+        'patient_id': _selectedPatientId,
+        'service_id': int.parse(_selectedServiceId),
+        'visit_type': _visitType,
+        'visit_date': visitDateTime.toIso8601String(),
+        'symptoms': _symptomsController.text,
+        'diagnosis': _diagnosisController.text,
+        'treatment': _treatmentController.text,
+        'prescription': _prescriptionController.text,
+        'doctor_name': _doctorNameController.text,
+        'doctor_id': userProvider.currentUserId ?? 'DOC001',
+        'notes': _notesController.text,
+        'test_results': _testResults,
+      };
+      
+      await Provider.of<MedicalRecordProvider>(context, listen: false)
+          .createMedicalRecord(recordData);
+      
+      if (mounted) {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Dossier médical créé avec succès'),
+            backgroundColor: Colors.green,
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Erreur: $e'),
@@ -601,6 +606,7 @@ child: Text(service['name']),
       }
     }
   }
+}
   
   @override
   void dispose() {

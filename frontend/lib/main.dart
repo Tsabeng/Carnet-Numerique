@@ -13,6 +13,9 @@ import 'providers/medical_record_provider.dart';
 import 'providers/patient_provider.dart';
 import 'providers/user_provider.dart';
 
+import 'screens/patient_code_access_screen.dart';
+import 'screens/patient_management_screen.dart';
+
 void main() {
   runApp(const MedicalApp());
 }
@@ -131,6 +134,15 @@ class MedicalApp extends StatelessWidget {
                   patientId: args?['patientId'],
                 ),
               );
+              case '/patient-code-access':
+  return MaterialPageRoute(
+    builder: (context) => const PatientCodeAccessScreen(),
+  );
+  
+case '/patient-management':
+  return MaterialPageRoute(
+    builder: (context) => const PatientManagementScreen(),
+  );
               
             default:
               // Retourner une page d'erreur 404
