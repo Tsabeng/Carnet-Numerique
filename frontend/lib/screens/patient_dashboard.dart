@@ -1,3 +1,4 @@
+// lib/screens/patient_dashboard.dart
 import 'package:flutter/material.dart';
 import 'medical_records_screen.dart';
 
@@ -20,10 +21,15 @@ class PatientDashboard extends StatelessWidget {
         title: const Text('Mon Carnet Médical'),
         actions: [
           IconButton(
+            icon: const Icon(Icons.notifications),
+            onPressed: () {
+              Navigator.pushNamed(context, '/notifications');
+            },
+          ),
+          IconButton(
             icon: const Icon(Icons.exit_to_app),
             onPressed: () {
-              Navigator.pushNamedAndRemoveUntil(
-                context, '/', (route) => false);
+              Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
             },
           ),
         ],
@@ -49,9 +55,9 @@ class PatientDashboard extends StatelessWidget {
                   children: [
                     _buildInfoItem('ID Patient', patientId),
                     const SizedBox(width: 30),
-                    _buildInfoItem('Groupe sanguin', patientData['bloodType']),
+                    _buildInfoItem('Groupe sanguin', patientData['bloodType'] ?? 'Non spécifié'),
                     const SizedBox(width: 30),
-                    _buildInfoItem('Date de naissance', patientData['birthDate']),
+                    _buildInfoItem('Date de naissance', patientData['birthDate'] ?? 'Non spécifié'),
                   ],
                 ),
               ],
@@ -99,7 +105,7 @@ class PatientDashboard extends StatelessWidget {
                   Icons.calendar_today,
                   Colors.orange,
                   () {
-                    _showComingSoon(context, 'Rendez-vous');
+                    Navigator.pushNamed(context, '/calendar');
                   },
                 ),
                 _buildMenuCard(
@@ -127,6 +133,24 @@ class PatientDashboard extends StatelessWidget {
                   Colors.teal,
                   () {
                     _showContactInfo(context);
+                  },
+                ),
+                _buildMenuCard(
+                  context,
+                  'Messages',
+                  Icons.message,
+                  Colors.purple,
+                  () {
+                    Navigator.pushNamed(context, '/chat');
+                  },
+                ),
+                _buildMenuCard(
+                  context,
+                  'Statistiques',
+                  Icons.bar_chart,
+                  Colors.teal,
+                  () {
+                    _showComingSoon(context, 'Statistiques de santé');
                   },
                 ),
               ],
@@ -229,7 +253,7 @@ class PatientDashboard extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(feature),
-        content: Text('Cette fonctionnalité sera disponible prochainement.'),
+        content: const Text('Cette fonctionnalité sera disponible prochainement.'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),

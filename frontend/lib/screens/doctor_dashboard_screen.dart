@@ -212,6 +212,45 @@ _buildMenuCard(
     );
   },
 ),
+_buildMenuCard(
+  context,
+  'Calendrier',
+  Icons.calendar_today,
+  Colors.teal,
+  () {
+    Navigator.pushNamed(context, '/calendar');
+  },
+),
+
+_buildMenuCard(
+  context,
+  'Messages',
+  Icons.message,
+  Colors.purple,
+  () {
+    Navigator.pushNamed(context, '/chat');
+  },
+),
+
+_buildMenuCard(
+  context,
+  'Statistiques',
+  Icons.bar_chart,
+  Colors.orange,
+  () {
+    Navigator.pushNamed(context, '/statistics');
+  },
+),
+
+_buildMenuCard(
+  context,
+  'Export PDF',
+  Icons.picture_as_pdf,
+  Colors.red,
+  () {
+    Navigator.pushNamed(context, '/pdf-export');
+  },
+),
                 _buildMenuCard(
   context,
   'Accès Patient',

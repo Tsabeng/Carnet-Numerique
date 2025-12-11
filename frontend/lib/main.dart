@@ -16,6 +16,17 @@ import 'providers/user_provider.dart';
 import 'screens/patient_code_access_screen.dart';
 import 'screens/patient_management_screen.dart';
 
+import 'package:provider/provider.dart';
+import 'screens/chat_screen.dart';
+//import 'screens/conversations_screen.dart';
+import 'screens/calendar_screen.dart';
+import 'screens/statistics_screen.dart';
+import 'screens/pdf_export_screen.dart';
+import 'services/notification_service.dart';
+import 'services/chat_service.dart';
+import 'services/appointment_service.dart';
+import 'screens/notifications_screen.dart';
+
 void main() {
   runApp(const MedicalApp());
 }
@@ -30,6 +41,9 @@ class MedicalApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => PatientProvider()),
         ChangeNotifierProvider(create: (_) => MedicalRecordProvider()),
+        ChangeNotifierProvider<AppointmentService>(create: (_) => AppointmentService()), 
+        ChangeNotifierProvider<NotificationService>(create: (_) => NotificationService()), 
+        ChangeNotifierProvider<ChatService>(create: (_) => ChatService()), 
       ],
       child: MaterialApp(
         title: 'Carnet Médical - Hôpital Général',
@@ -89,6 +103,11 @@ class MedicalApp extends StatelessWidget {
           '/patient-login': (context) => const PatientLoginScreen(),
           '/doctor-login': (context) => const DoctorLoginScreen(),
           '/patient-search': (context) => const PatientSearchScreen(),
+          '/notifications': (context) => const NotificationsScreen(), 
+          '/chat': (context) => const ChatScreen(), 
+          '/calendar': (context) => const CalendarScreen(), 
+          '/statistics': (context) => const StatisticsScreen(), 
+          '/pdf-export': (context) => const PDFExportScreen(),
         },
         onGenerateRoute: (settings) {
           // Gérer les routes avec paramètres
